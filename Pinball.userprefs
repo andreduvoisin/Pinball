@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PaddleController.cs">
     <Files>
-      <File FileName="Assets\Scripts\PaddleController.cs" Line="21" Column="1" />
+      <File FileName="Assets\Scripts\PaddleController.cs" Line="21" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
