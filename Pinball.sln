@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{7485E054-33AC-5D3A-346A-594485A92908}") = "Pinball", "Assembly-CSharp.csproj", "{BB05E0C7-5321-6011-46F5-F08DDB27510C}"
+EndProject
 Project("{7485E054-33AC-5D3A-346A-594485A92908}") = "Pinball", "Assembly-CSharp-Editor.csproj", "{5F7E7CA7-684B-EA78-132C-299015B28985}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB05E0C7-5321-6011-46F5-F08DDB27510C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB05E0C7-5321-6011-46F5-F08DDB27510C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB05E0C7-5321-6011-46F5-F08DDB27510C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB05E0C7-5321-6011-46F5-F08DDB27510C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F7E7CA7-684B-EA78-132C-299015B28985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F7E7CA7-684B-EA78-132C-299015B28985}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7E7CA7-684B-EA78-132C-299015B28985}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -17,7 +23,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+			GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -35,4 +41,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
