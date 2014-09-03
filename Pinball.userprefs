@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PaddleController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LaunchPadController.cs">
     <Files>
-      <File FileName="Assets\Scripts\PaddleController.cs" Line="21" Column="25" />
+      <File FileName="Assets\Scripts\BallController.cs" Line="27" Column="2" />
+      <File FileName="Assets\Scripts\LaunchPadController.cs" Line="78" Column="24" />
+      <File FileName="Assets\Scripts\PaddleController.cs" Line="15" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
