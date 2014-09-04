@@ -10,7 +10,6 @@ public class LaunchPadController : MonoBehaviour
 	public GameObject ball;
 
 	private float translatedDistance;
-	private SpringJoint spring;
 
 	private enum LaunchPadState
 	{
@@ -25,8 +24,6 @@ public class LaunchPadController : MonoBehaviour
 	{
 		state = LaunchPadState.MIN;
 		translatedDistance = 0.0f;
-		spring = gameObject.GetComponent<SpringJoint>();
-		SpringJoint.Destroy(gameObject.GetComponent<SpringJoint>());
 	}
 
 	void Update()
@@ -60,7 +57,11 @@ public class LaunchPadController : MonoBehaviour
 		{
 			if(translatedDistance != 0.0f)
 			{
-				ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance);
+				if(transform.position.x == ball.transform.position.x
+				   && Mathf.Abs(transform.position.z - ball.transform.position.z) <= maxDistance + 1)
+				{
+					ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance);
+				}
 				ReturnLaunchPad();
 				state = LaunchPadState.RETURNING;
 			}
@@ -89,7 +90,16 @@ public class LaunchPadController : MonoBehaviour
 
 	void ReturnLaunchPad()
 	{
-		float returnDist = ball.rigidbody.transform.position.z - transform.position.z - 1;
+		float returnDist;
+		if(transform.position.x == ball.transform.position.x)
+		{
+			returnDist = ball.transform.position.z - transform.position.z - 1.0f;
+		}
+		else
+		{
+			returnDist = 1.0f;
+		}
+
 		translatedDistance -= returnDist;
 		if(translatedDistance < 0.0f)
 		{
