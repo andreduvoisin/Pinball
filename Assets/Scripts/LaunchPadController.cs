@@ -57,7 +57,7 @@ public class LaunchPadController : MonoBehaviour
 		{
 			if(translatedDistance != 0.0f)
 			{
-				if(transform.position.x == ball.transform.position.x
+				if(Mathf.Round(transform.position.x) == Mathf.Round(ball.transform.position.x)
 				   && Mathf.Abs(transform.position.z - ball.transform.position.z) <= maxDistance + 1)
 				{
 					ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance);
@@ -91,7 +91,7 @@ public class LaunchPadController : MonoBehaviour
 	void ReturnLaunchPad()
 	{
 		float returnDist;
-		if(transform.position.x == ball.transform.position.x)
+		if(Mathf.Round(transform.position.x) == Mathf.Round(ball.transform.position.x))
 		{
 			returnDist = ball.transform.position.z - transform.position.z - 1.0f;
 		}

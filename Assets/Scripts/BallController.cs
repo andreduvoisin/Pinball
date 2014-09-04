@@ -27,8 +27,8 @@ public class BallController : MonoBehaviour
 
 	void ResetBall()
 	{
-		transform.position = startPos;
 		transform.rigidbody.velocity = Vector3.zero;
 		transform.rigidbody.angularVelocity = Vector3.zero;
+		transform.position = startPos;
 	}
 }
