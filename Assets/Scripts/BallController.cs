@@ -11,15 +11,19 @@ public class BallController : MonoBehaviour
 	public Material orangeMaterial;
 	public Material redMaterial;
 
+	public bool isReverseBall;
+
 	private Vector3 startPos;
 	private GameController gameController;
 
-	private GameController.CurrentColor myColor;
+	//private GameController.CurrentColor myColor;
+
+	public AudioClip collisionSound;
 
 	// Use this for initialization
 	void Start()
 	{
-		myColor = GameController.CurrentColor.NONE;
+		//myColor = GameController.CurrentColor.NONE;
 
 		startPos = transform.position;
 
@@ -34,6 +38,14 @@ public class BallController : MonoBehaviour
 	void Update()
 	{
 		ProcessInput();
+	}
+
+	void FixedUpdate()
+	{
+		if(isReverseBall)
+		{
+			rigidbody.AddForce(Physics.gravity * -1 * rigidbody.mass);
+		}
 	}
 
 	void ProcessInput()
@@ -54,13 +66,16 @@ public class BallController : MonoBehaviour
 	{
 		if(other.gameObject.tag == "BreakoutCube")
 		{
-			BreakoutCubeController cubeScript = other.gameObject.GetComponent<BreakoutCubeController>();
-			if(myColor == cubeScript.GetMyColor())
-			{
+			//BreakoutCubeController cubeScript = other.gameObject.GetComponent<BreakoutCubeController>();
+			//if(myColor == cubeScript.GetMyColor())
+			//{
 				gameController.AddScore(500);
-				DestroyObject(other.gameObject);
-			}
+				other.gameObject.SetActive(false);
+				gameController.ReportBlock(other.gameObject);
+			AudioSource.PlayClipAtPoint(collisionSound, new Vector3(-1.0f, 15.5f, -25.0f), 0.75f);
+			//}
 		}
+		/*
 		else if(other.gameObject.tag == "BreakoutPill")
 		{
 			PillController pillScript = other.gameObject.GetComponent<PillController>();
@@ -81,6 +96,7 @@ public class BallController : MonoBehaviour
 				break;
 			}
 		}
+		*/
 	}
 
 	void OnTriggerEnter(Collider other)

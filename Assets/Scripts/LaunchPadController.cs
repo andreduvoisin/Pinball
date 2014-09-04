@@ -8,12 +8,12 @@ public class LaunchPadController : MonoBehaviour
 	public float translationConstant;
 	public float forceConstant;
 	public GameObject ball;
-	public GameObject spring;
-	public float springCompressionFactor;
-	public float springReturnFactor;
-	public float springMovementAmount;
+
+	public bool isReverseLaunchPad;
 
 	private float translatedDistance;
+
+	public AudioClip plungerAudio;
 
 	private enum LaunchPadState
 	{
@@ -61,10 +61,18 @@ public class LaunchPadController : MonoBehaviour
 		{
 			if(translatedDistance != 0.0f)
 			{
+				AudioSource.PlayClipAtPoint(plungerAudio, new Vector3(-1.0f, 15.5f, -25.0f), 4.0f);
 				if(Mathf.Round(transform.position.x) == Mathf.Round(ball.transform.position.x)
 				   && Mathf.Abs(transform.position.z - ball.transform.position.z) <= maxDistance + 1)
 				{
-					ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance);
+					if(!isReverseLaunchPad)
+					{
+						ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance);
+					}
+					else
+					{
+						ball.rigidbody.AddForce(0, 0, forceConstant * translatedDistance * -1);
+					}
 				}
 				ReturnLaunchPad();
 				state = LaunchPadState.RETURNING;
@@ -90,8 +98,6 @@ public class LaunchPadController : MonoBehaviour
 			translatedDistance = maxDistance;
 		}
 		transform.Translate(0, 0, dist * -1);
-
-		ChargeSpring();
 	}
 
 	void ReturnLaunchPad()
@@ -99,7 +105,7 @@ public class LaunchPadController : MonoBehaviour
 		float returnDist;
 		if(Mathf.Round(transform.position.x) == Mathf.Round(ball.transform.position.x))
 		{
-			returnDist = ball.transform.position.z - transform.position.z - 1.0f;
+			returnDist = Mathf.Abs(ball.transform.position.z - transform.position.z) - 1.0f;
 		}
 		else
 		{
@@ -113,23 +119,5 @@ public class LaunchPadController : MonoBehaviour
 			translatedDistance = 0.0f;
 		}
 		transform.Translate(0, 0, returnDist);
-
-		ReturnSpring ();
-	}
-
-	void ChargeSpring()
-	{
-		Vector3 springScale = spring.transform.localScale;
-		springScale.y *= springCompressionFactor;
-		spring.transform.localScale = springScale;
-		spring.transform.Translate(0, springMovementAmount * -1, 0);
-	}
-
-	void ReturnSpring()
-	{
-		Vector3 springScale = spring.transform.localScale;
-		springScale.y *= springReturnFactor;
-		spring.transform.localScale = springScale;
-		spring.transform.Translate(0, springMovementAmount, 0);
 	}
 }

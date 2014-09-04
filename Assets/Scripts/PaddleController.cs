@@ -6,6 +6,9 @@ public class PaddleController : MonoBehaviour
 	public KeyCode key;
 	private float initialVelocity;
 
+	public AudioClip up;
+	public AudioClip down;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -28,6 +31,7 @@ public class PaddleController : MonoBehaviour
 			{
 				InvertMotorVelocity();
 			}
+			AudioSource.PlayClipAtPoint(up, new Vector3(-1.0f, 15.5f, -25.0f), 4.0f);
 		}
 		else if(Input.GetKeyUp(key))
 		{
@@ -36,6 +40,7 @@ public class PaddleController : MonoBehaviour
 			{
 				InvertMotorVelocity();
 			}
+			AudioSource.PlayClipAtPoint(down, new Vector3(-1.0f, 15.5f, -25.0f), 4.0f);
 		}
 	}
 

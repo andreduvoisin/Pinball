@@ -4,21 +4,19 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
 	public int score = 0;
-	public int balls = 3;
+	public int balls = 6;
 	public GUIText scoreText;
 	public GUIText ballsText;
 	public GUIText gravityFlipTimerText;
 	public GUIText winText;
 	public KeyCode colorChangeKey;
-	public GameObject enemyCapsule;
-	
-	public int spawnInterval;
-	public int reduceSpawnInterval;
-	private int nextSpawnTime;
 
 	public GameObject ball;
+	public GameObject reverseBall;
 
 	public float tiltAmount;
+
+	private Queue blocks;
 
 	public enum CurrentColor
 	{
@@ -32,8 +30,9 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
+		blocks = new Queue();
+
 		currentColor = CurrentColor.ORANGE;
-		nextSpawnTime = 0;
 
 		if(Physics.gravity.z > 0)
 		{
@@ -48,26 +47,6 @@ public class GameController : MonoBehaviour
 		ProcessInput();
 		UpdateScore();
 		UpdateBalls();
-		UpdateCurrentColor();
-		/*
-		if(Mathf.RoundToInt(Time.time) == nextSpawnTime)
-		{
-			nextSpawnTime += spawnInterval;
-			// Random enemy location.
-			// x = -9 to 6.75
-			// y = 1
-			// z = 19
-			Vector3 pos = new Vector3(Random.Range(-9f, 6.75f), 1, 19);
-			Instantiate(enemyCapsule, pos, Quaternion.identity);
-		}
-		if(Mathf.RoundToInt(Time.time) % reduceSpawnInterval == 0)
-		{
-			if(spawnInterval > 1)
-			{
-				--spawnInterval;
-			}
-		}
-		*/
 	}
 
 	void OnGUI()
@@ -93,59 +72,24 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	void UpdateCurrentColor()
-	{
-		/*
-		switch(currentColor)
-		{
-		case CurrentColor.RED:
-			currentColorText.text = "RED";
-			break;
-		case CurrentColor.GREEN:
-			currentColorText.text = "GREEN";
-			break;
-		case CurrentColor.BLUE:
-			currentColorText.text = "BLUE";
-			break;
-		case CurrentColor.ORANGE:
-			currentColorText.text = "ORANGE";
-			break;
-		}
-		*/
-	}
-
 	void ProcessInput()
 	{
-		if(Input.GetKeyDown(colorChangeKey))
+		/*if(Input.GetKeyDown(colorChangeKey))
 		{
-			/*
-			switch(currentColor)
-			{
-			case CurrentColor.RED:
-				currentColor = CurrentColor.GREEN;
-				break;
-			case CurrentColor.GREEN:
-				currentColor = CurrentColor.BLUE;
-				break;
-			case CurrentColor.BLUE:
-				currentColor = CurrentColor.ORANGE;
-				break;
-			case CurrentColor.ORANGE:
-				currentColor = CurrentColor.RED;
-				break;
-			}
-			*/
 			Vector3 gravity = Physics.gravity;
 			gravity.z *= -1;
 			Physics.gravity = gravity;
 		}
-		else if(Input.GetKeyDown(KeyCode.LeftArrow))
+		else*/
+		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			ball.rigidbody.AddForce(new Vector3(tiltAmount * -1, 0, 0));
+			reverseBall.rigidbody.AddForce(new Vector3(tiltAmount * -1, 0, 0));
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			ball.rigidbody.AddForce(new Vector3(tiltAmount, 0, 0));
+			reverseBall.rigidbody.AddForce(new Vector3(tiltAmount, 0, 0));
 		}
 	}
 
@@ -175,5 +119,20 @@ public class GameController : MonoBehaviour
 	public int GetBalls()
 	{
 		return balls;
+	}
+
+	public void ReportBlock(GameObject other)
+	{
+		blocks.Enqueue(other.gameObject);
+		if(blocks.Count >= 27)
+		{
+			while(blocks.Count > 0)
+			{
+				GameObject block = blocks.Dequeue() as GameObject;
+				block.SetActive(true);
+			}
+			balls += 2;
+			score += 10000;
+		}
 	}
 }

@@ -4,7 +4,6 @@ using System.Collections;
 public class PillController : MonoBehaviour
 {
 	private GameController.CurrentColor myColor;
-	private GameController gameController;
 	
 	void Start()
 	{
@@ -23,12 +22,6 @@ public class PillController : MonoBehaviour
 		else if(renderer.material.name.Contains("BlueMaterial"))
 		{
 			myColor = GameController.CurrentColor.BLUE;
-		}
-		
-		GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-		if(gameControllerObject)
-		{
-			gameController = gameControllerObject.GetComponent<GameController>();
 		}
 	}
 
