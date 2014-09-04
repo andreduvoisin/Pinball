@@ -8,6 +8,10 @@ public class LaunchPadController : MonoBehaviour
 	public float translationConstant;
 	public float forceConstant;
 	public GameObject ball;
+	public GameObject spring;
+	public float springCompressionFactor;
+	public float springReturnFactor;
+	public float springMovementAmount;
 
 	private float translatedDistance;
 
@@ -86,6 +90,8 @@ public class LaunchPadController : MonoBehaviour
 			translatedDistance = maxDistance;
 		}
 		transform.Translate(0, 0, dist * -1);
+
+		ChargeSpring();
 	}
 
 	void ReturnLaunchPad()
@@ -107,5 +113,23 @@ public class LaunchPadController : MonoBehaviour
 			translatedDistance = 0.0f;
 		}
 		transform.Translate(0, 0, returnDist);
+
+		ReturnSpring ();
+	}
+
+	void ChargeSpring()
+	{
+		Vector3 springScale = spring.transform.localScale;
+		springScale.y *= springCompressionFactor;
+		spring.transform.localScale = springScale;
+		spring.transform.Translate(0, springMovementAmount * -1, 0);
+	}
+
+	void ReturnSpring()
+	{
+		Vector3 springScale = spring.transform.localScale;
+		springScale.y *= springReturnFactor;
+		spring.transform.localScale = springScale;
+		spring.transform.Translate(0, springMovementAmount, 0);
 	}
 }
