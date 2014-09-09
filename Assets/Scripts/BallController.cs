@@ -20,10 +20,14 @@ public class BallController : MonoBehaviour
 
 	public AudioClip collisionSound;
 
+	private bool isDone;
+
 	// Use this for initialization
 	void Start()
 	{
 		//myColor = GameController.CurrentColor.NONE;
+
+		isDone = false;
 
 		startPos = transform.position;
 
@@ -107,15 +111,28 @@ public class BallController : MonoBehaviour
 		}
 	}
 
-	void ResetBall()
+	public bool GetIsDone()
 	{
-		gameController.SubtractBalls(1);
+		return isDone;
+	}
 
+	public void ResetBall()
+	{
 		if(gameController.GetBalls() > 0)
 		{
+			isDone = false;
 			transform.rigidbody.velocity = Vector3.zero;
 			transform.rigidbody.angularVelocity = Vector3.zero;
 			transform.position = startPos;
 		}
+		else
+		{
+			isDone = true;
+			transform.rigidbody.velocity = Vector3.zero;
+			transform.rigidbody.angularVelocity = Vector3.zero;
+			transform.position = new Vector3(100, 100, 100);
+		}
+
+		gameController.SubtractBalls(1);
 	}
 }

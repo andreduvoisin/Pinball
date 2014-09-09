@@ -66,7 +66,9 @@ public class GameController : MonoBehaviour
 	void UpdateBalls()
 	{
 		ballsText.text = "Balls: " + balls;
-		if(balls <= 0)
+		if(balls <= 0
+		   && ball.GetComponent<BallController>().GetIsDone()
+		   && reverseBall.GetComponent<BallController>().GetIsDone())
 		{
 			winText.guiText.enabled = true;
 		}
@@ -110,10 +112,22 @@ public class GameController : MonoBehaviour
 	public void AddBalls(int num)
 	{
 		balls += num;
+		if(ball.GetComponent<BallController>().GetIsDone() && balls > 0)
+		{
+			ball.GetComponent<BallController>().ResetBall();
+		}
+		if(reverseBall.GetComponent<BallController>().GetIsDone() && balls > 0)
+		{
+			reverseBall.GetComponent<BallController>().ResetBall();
+		}
 	}
 	public void SubtractBalls(int num)
 	{
 		balls -= num;
+		if(balls < 0)
+		{
+			balls = 0;
+		}
 	}
 
 	public int GetBalls()
@@ -131,8 +145,8 @@ public class GameController : MonoBehaviour
 				GameObject block = blocks.Dequeue() as GameObject;
 				block.SetActive(true);
 			}
-			balls += 2;
-			score += 10000;
+			AddBalls(2);
+			AddScore(10000);
 		}
 	}
 }
